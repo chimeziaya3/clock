@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Make Clock</title>
+	<link href="https://fonts.googleapis.com/css?family=Baloo+Tamma|Wallpoet" rel="stylesheet">
+	<style type="text/css" >
+		body{
+			position: absolute;
+		}
+		/*to give my timer a green color and dfifernt font*/
+		#clock{
+			margin: 200px 0 0 630px;
+			position: absolute;
+			color: green;
+			font-size: 30pt;
+			font-family: 'Wallpoet', cursive;
+			z-index: 3;
+			
+		}
+		/*the black part of the clock*/
+		#innershell{
+			height: 0;
+			width: 300px;
+			position: absolute;
+			margin: 160px 0 30px 580px;
+			border-bottom: 120px solid #161616;
+			border-left: 30px solid transparent;
+			border-right: 30px solid transparent;
+			z-index: 2;
+			border-radius: 30px 30px 30px 30px;
+
+
+
+			
+			
+		}
+		/*the gray part of the clock*/
+		#outershell{
+			height: 0;
+			width: 340px;
+			position: absolute;
+			margin: 130px 0 0px 540px;
+			border-bottom: 180px solid #252625;
+			border-left: 50px solid transparent;
+			border-right: 50px solid transparent;
+			border-radius: 30px 30px 30px 30px;  
+			
+		}
+		/*repositioning my hrs,min,sec and set alarm buttons*/
+		#alarmAmpm{
+			
+			margin: 50px 0 0 800px;
+			position: absolute;
+		}
+		#alarmSec{
+			margin: 50px 0 0 750px;
+			position: absolute;
+		}
+		#alarmMin{
+			margin: 50px 0 0 700px;
+			position: absolute;
+		}
+		#alarmHrs{
+			margin: 50px 0 0 650px;
+			position: absolute;
+		}
+		#setAlarm{
+			margin: 70px 0 0 720px;
+			position: absolute;
+			
+
+		}
+		#setReset{
+			margin: 90px 0 0 710px;
+			position: absolute;
+		}
+
+	</style>
+</head>
+<body>
+<div id="innershell"></div>
+<div id="outershell"></div>
+<div id=clock>00:00:00</div>
+
+<!-- created a dropdown for my Hours, Minutes, and Seconds value -->
+<select id="alarmHrs" >
+	<option selected value="Hrs">Hrs</option>
+	<option value="01">01</option>
+	<option value="02">02</option>
+	<option value="03">03</option>
+	<option value="04">04</option>
+	<option value="05">05</option>
+	<option value="06">06</option>
+	<option value="07">07</option>
+	<option value="08">08</option>
+	<option value="09">09</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+</select>
+<select id="alarmMin" >
+	<option selected value="Min">Min</option>
+	<option value="00">00
+	<option value="01">01</option>
+	<option value="02">02</option>
+	<option value="03">03</option>
+	<option value="04">04</option>
+	<option value="05">05</option>
+	<option value="06">06</option>
+	<option value="07">07</option>
+	<option value="08">08</option>
+	<option value="09">09</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+	<option value="13">13</option>
+	<option value="14">14</option>
+	<option value="15">15</option>
+	<option value="16">16</option>
+	<option value="17">17</option>
+	<option value="18">18</option>
+	<option value="19">19</option>
+	<option value="20">20</option>
+	<option value="21">21</option>
+	<option value="22">22</option>
+	<option value="23">23</option>
+	<option value="24">24</option>
+	<option value="25">25</option>
+	<option value="26">26</option>
+	<option value="27">27</option>
+	<option value="28">28</option>
+	<option value="29">29</option>
+	<option value="30">30</option>
+	<option value="31">31</option>
+	<option value="32">32</option>
+	<option value="33">33</option>
+	<option value="34">34</option>
+	<option value="35">35</option>
+	<option value="36">36</option>
+	<option value="37">37</option>
+	<option value="38">38</option>
+	<option value="39">39</option>
+	<option value="40">40</option>
+	<option value="41">41</option>
+	<option value="42">42</option>
+	<option value="43">43</option>
+	<option value="44">44</option>
+	<option value="45">45</option>
+	<option value="46">46</option>
+	<option value="47">47</option>
+	<option value="48">48</option>
+	<option value="49">49</option>
+	<option value="50">50</option>
+	<option value="51">51</option>
+	<option value="52">52</option>
+	<option value="53">53</option>
+	<option value="54">54</option>
+	<option value="55">55</option>
+	<option value="56">56</option>
+	<option value="57">57</option>
+	<option value="58">58</option>
+	<option value="59">59</option>
+</select>
+<select id="alarmSec" >
+	<option selected value="Sec">Sec</option>
+	<option value="00">00</option>
+</select>
+<select id="alarmAmpm" >
+	<option value="AM">AM</option>
+	<option value="PM">PM</option>
+</select>
+<!-- on click of the set alarm buttom my alarm will set based on the time chosen -->
+<input type="button" id="setAlarm" value="Set Alarm" onclick="alarmOn()">
+
+<audio id="audio">
+	<source src="railroad_crossing_bell-Brylon_Terry-1551570865.mp3" type="audio/mpeg">
+</audio>
+
+
+
+<script type="text/javascript">
+// set my variables here as placeholders
+	setInterval(displayclock, 500);
+	var clock;
+	var hrs;
+	var min;
+	var sec;
+	var ampm;
+
+// This function will get the real clock time for my display
+	function displayclock(){
+		time = new Date();
+		hrs=time.getHours();
+		min=time.getMinutes();
+		sec=time.getSeconds();
+		ampm='PM'
+		
+		// to give minutes double digits
+		if(hrs<10){
+		hrs='0'+hrs;
+		}
+
+		// to give minutes double digits
+		if(min<10){
+			min='0'+min;
+		}
+
+		// to give seconds double digits
+		if(sec<10){
+			sec='0'+sec;
+		}
+		//to make the hour hand come back to 12 in the afternoon
+		if (hrs==0) {
+			hrs=12;
+		}
+		//changes the ending symbol to 'AM' its its the moring
+		if (hrs<12) {
+			ampm='AM'
+		}
+
+		// to make it standard clock format and not mitiary
+		if(hrs>12){
+			hrs=hrs-12;
+		}
+		// this will replace what is in my div called 'clock' with the real time
+		clock=document.getElementById('clock');
+	clock.innerHTML=hrs+":"+min+":"+sec+ampm;
+}
+
+// this serves as a place holder for my alarm times
+var alarmHourNum;
+var alarmNMinNum;
+var alarmSecNum;
+var alarmTime;
+var alarmAmpmText;
+
+// this takes the values in my dropdown of alarm times and sets a method on how i will retrieve the information against the real time.
+//
+function alarmSet() {
+alarmHourNum = document.getElementById('alarmHrs').value;
+alarmMinNum = document.getElementById('alarmMin').value;
+alarmSecNum = document.getElementById('alarmSec').value;
+alarmAmpmText= document.getElementById('alarmAmpm').value;
+alarmTime = alarmHourNum + ":" + alarmMinNum+ ":" + alarmSecNum + alarmAmpmText;
+
+
+
+}
+function playAudio(){
+	document.getElementById('audio').play();
+}
+
+//This function now grabs my dropdown information and everytime my current time amd alarm clock time match up..
+//..the alarm will sound
+var alarm;
+function alarmOn(){
+	alarmSet();
+	
+
+	if(hrs==alarmHourNum && 
+		min== alarmMinNum && 
+		sec==alarmSecNum && 
+		ampm==alarmAmpmText){
+
+		playAudio();
+		
+
+
+	}
+	setInterval("alarmOn()", 1000);
+}
+
+
+
+	
+</script>
+</body>
+</html>
